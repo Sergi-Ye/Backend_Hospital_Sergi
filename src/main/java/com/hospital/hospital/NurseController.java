@@ -28,7 +28,7 @@ public class NurseController {
     public ResponseEntity<Boolean> login(@RequestBody Nurse inputNurse) {
 
     	//Check if the user and password exist in the database
-        Optional<Nurse> nurse = nurseRepository.findByUserAndPw(
+        Optional<Nurse> nurse = nurseRepository.findByUsernameAndPassword(
         		inputNurse.getUsername(),
         		inputNurse.getPassword()
         );

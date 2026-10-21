@@ -27,8 +27,7 @@ public class Nurse {
     public Nurse() {
     }
 
-    public Nurse(String username, String password, String name,
-                 String surname, String email) {
+    public Nurse(String username, String password, String name, String surname, String email) {
         this.username = username;
         this.password = password;
         this.name = name;
