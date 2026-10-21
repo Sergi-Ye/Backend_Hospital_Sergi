@@ -27,10 +27,10 @@ public class NurseController {
     @PostMapping("/login")
     public ResponseEntity<Boolean> login(@RequestBody Nurse inputNurse) {
 
-    	//Check if the username and password exist in the database
+    	//Check if the user and password exist in the database
         Optional<Nurse> nurse = nurseRepository.findByUserAndPw(
-                inputNurse.getUsername(),
-                inputNurse.getPassword()
+        		inputNurse.getUsername(),
+        		inputNurse.getPassword()
         );
 
         boolean found = nurse.isPresent();

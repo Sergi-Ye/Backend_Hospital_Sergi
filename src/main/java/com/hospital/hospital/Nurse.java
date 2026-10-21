@@ -14,43 +14,27 @@ public class Nurse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_nurse")
     private Integer idNurse;
 
-    @Column(name = "username", nullable = false, unique = true, length = 50)
+    @Column(unique = true)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 255)
     private String password;
-
-    @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
-
-    @Column(name = "last_name", nullable = false, length = 100)
     private String lastName;
-
-    @Column(name = "email", nullable = false, length = 255)
     private String email;
 
-    @Column(name = "profile_image", length = 255)
-    private String profileImage;
-
-    // Empty constructor required by Hibernate
     public Nurse() {
     }
 
-    // Constructor to create a nurse
     public Nurse(String username, String password, String firstName,
-                 String lastName, String email, String profileImage) {
+                 String lastName, String email) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.profileImage = profileImage;
     }
-
-    // Getters and setters
 
     public Integer getIdNurse() {
         return idNurse;
@@ -98,13 +82,5 @@ public class Nurse {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
     }
 }
