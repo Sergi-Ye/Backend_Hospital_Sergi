@@ -10,6 +10,6 @@ public interface NurseRepository extends JpaRepository<Nurse, Integer> {
     // Find a nurse by username and password (login)
     Optional<Nurse> findByUserAndPw(String username, String password);
 
-    // Find a nurse by first name
-    Optional<Nurse> findByName(String firstName);
+    // Find a nurse by name
+    Optional<Nurse> findByName(String name);
 }
