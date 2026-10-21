@@ -3,14 +3,13 @@ package com.hospital.hospital;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-// This will be AUTO IMPLEMENTED by Spring into a Bean called nurseRepository
-// CRUD refers Create, Read, Update, Delete
-public interface NurseRepository extends JpaRepository<Nurse, String> {
+// Spring automatically implements this repository
+// CRUD refers to Create, Read, Update and Delete
+public interface NurseRepository extends JpaRepository<Nurse, Integer> {
 
     // Find a nurse by username and password (login)
-    Optional<Nurse> findByUserAndPw(String user, String pw);
+    Optional<Nurse> findByUserAndPw(String username, String password);
 
-    // Find a nurse by name
-    Optional<Nurse> findByName(String name);
-
+    // Find a nurse by first name
+    Optional<Nurse> findByName(String firstName);
 }
