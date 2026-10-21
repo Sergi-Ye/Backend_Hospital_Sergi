@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // CRUD refers to Create, Read, Update and Delete
 public interface NurseRepository extends JpaRepository<Nurse, Integer> {
 
-    // Find a nurse by username and password (login)
+    // Find a nurse by user and password (login)
     Optional<Nurse> findByUserAndPw(String username, String password);
 
     // Find a nurse by name
