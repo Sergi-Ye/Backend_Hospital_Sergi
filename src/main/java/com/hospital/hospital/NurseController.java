@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import tools.jackson.databind.json.JsonMapper;
 
-@RestController
-@RequestMapping("/nurse")
+@RestController // This means that this class is a Controller
+@RequestMapping("/nurse") // This means URL's start with /nurse
 public class NurseController {
 
     private final NurseRepository nurseRepository;
@@ -40,7 +39,7 @@ public class NurseController {
 
         boolean found = nurse.isPresent();
 
-        // Return 200 if login is correct, or 401 if it is incorrect
+        // Return correct or incorrect login
         return ResponseEntity
                 .status(found ? HttpStatus.OK : HttpStatus.UNAUTHORIZED)
                 .body(found);
