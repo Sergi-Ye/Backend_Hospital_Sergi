@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,56 +21,51 @@ import tools.jackson.databind.json.JsonMapper;
 @RequestMapping("/nurse")
 public class NurseController {
 
-	private List<Nurse> nurses = new ArrayList<>();
+    private final NurseRepository nurseRepository;
 
-	// Constructor
-	public NurseController() {
+    // Constructor: Spring gives us the repository
+    public NurseController(NurseRepository nurseRepository) {
+        this.nurseRepository = nurseRepository;
+    }
 
-		try (InputStream inputStream = getClass().getResourceAsStream("/nurses.json")) {
+    // Login
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> login(@RequestBody Nurse inputNurse) {
 
-			JsonMapper objectMapper = JsonMapper.builder().build();
+    	//Check if the username and password exist in the database
+        Optional<Nurse> nurse = nurseRepository.findByUserAndPw(
+                inputNurse.getUser(),
+                inputNurse.getPw()
+        );
 
-			Nurse[] nursesArray = objectMapper.readValue(inputStream, Nurse[].class);
+        boolean found = nurse.isPresent();
 
-			nurses = Arrays.asList(nursesArray);
+        // Return 200 if login is correct, or 401 if it is incorrect
+        return ResponseEntity
+                .status(found ? HttpStatus.OK : HttpStatus.UNAUTHORIZED)
+                .body(found);
+    }
 
-		} catch (Exception e) {
+    
+    // Get all nurses from the database
+    @GetMapping("/index")
+    public ResponseEntity<List<Nurse>> getAll() {
+        return ResponseEntity.ok(nurseRepository.findAll());
+    }
 
-			e.printStackTrace();
+    
+    // Search for a nurse by name
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Nurse> findByName(@PathVariable String name) {
 
-		}
-	}
+        Optional<Nurse> nurse = nurseRepository.findByName(name);
 
-	@PostMapping("/login")
-	public ResponseEntity<Boolean> login(@RequestBody Nurse inputNurse) {
+        // Check if a nurse was found
+        if (nurse.isPresent()) {
+            return ResponseEntity.ok(nurse.get());
+        }
 
-		boolean found = false;
-		for (Nurse n : nurses) {
-
-			if (n.getUser().equals(inputNurse.getUser()) && n.getPw().equals(inputNurse.getPw())) {
-				found = true;
-				break;
-			}
-		}
-		return ResponseEntity.status(found ? HttpStatus.OK : HttpStatus.UNAUTHORIZED).body(found);
-
-	}
-
-	@GetMapping("/index")
-	public ResponseEntity<List<Nurse>> getAll() {
-		return ResponseEntity.ok(nurses);
-	}
-
-	@GetMapping("/name/{name}")
-	public ResponseEntity<Nurse> findByName(@PathVariable String name) {
-		for (Nurse nurse : nurses) {
-			if (nurse.getName().equalsIgnoreCase(name)) {
-				return ResponseEntity.ok(nurse);
-			}
-		}
-
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		
-	}
-
+        // Return 404 if the nurse does not exist
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
 }
