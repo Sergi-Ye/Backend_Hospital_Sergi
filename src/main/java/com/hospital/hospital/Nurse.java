@@ -1,8 +1,11 @@
+
 package com.hospital.hospital;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 
 @Entity
@@ -10,45 +13,98 @@ import jakarta.persistence.Column;
 public class Nurse {
 
     @Id
-    @Column(name = "user", nullable = false, unique = true)
-    private String user;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_nurse")
+    private Integer idNurse;
 
-    @Column(name = "pw")
-    private String pw;
+    @Column(name = "username", nullable = false, unique = true, length = 50)
+    private String username;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "password", nullable = false, length = 255)
+    private String password;
 
+    @Column(name = "first_name", nullable = false, length = 100)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 100)
+    private String lastName;
+
+    @Column(name = "email", nullable = false, length = 255)
+    private String email;
+
+    @Column(name = "profile_image", length = 255)
+    private String profileImage;
+
+    // Empty constructor required by Hibernate
     public Nurse() {
     }
 
-    public Nurse(String name, String user, String pw) {
-        this.name = name;
-        this.user = user;
-        this.pw = pw;
+    // Constructor to create a nurse
+    public Nurse(String username, String password, String firstName,
+                 String lastName, String email, String profileImage) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.profileImage = profileImage;
     }
 
-    public String getUser() {
-        return user;
+    // Getters and setters
+
+    public Integer getIdNurse() {
+        return idNurse;
     }
 
-    public String getPw() {
-        return pw;
+    public void setIdNurse(Integer idNurse) {
+        this.idNurse = idNurse;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setPw(String pw) {
-        this.pw = pw;
+    public String getPassword() {
+        return password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }
