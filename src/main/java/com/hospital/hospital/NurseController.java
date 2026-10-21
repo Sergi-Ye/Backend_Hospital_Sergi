@@ -29,8 +29,8 @@ public class NurseController {
 
     	//Check if the username and password exist in the database
         Optional<Nurse> nurse = nurseRepository.findByUserAndPw(
-                inputNurse.getUser(),
-                inputNurse.getPw()
+                inputNurse.getUsername(),
+                inputNurse.getPassword()
         );
 
         boolean found = nurse.isPresent();
